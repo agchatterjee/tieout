@@ -1,0 +1,9 @@
+Modify options so that you can pass in the user name and password for a 
+connection on the command line (and thereofre note have to include the
+possible sensitive information in a configuration file)
+
+Instead of assuming 0, have a new Result Type that is "missing"
+
+Change JDBC driver load mechanism to dynamic so the libraries don't have to be included
+
+Find a way to make the jars auto link with the project.
