@@ -1,0 +1,86 @@
+<MdxSqlTieout>
+
+	<!--  the connections -->
+
+	<connections>
+		
+		<connection id="DB20TCP">
+			<type>sql</type>
+			<connectstring>jdbc:db2://u060dbc2.kroger.com:50000/DB20TCP</connectstring>
+			<jdbcclass>com.ibm.db2.jcc.DB2Driver</jdbcclass>
+			<user>FINESS1</user>
+			<password>kjmn3454</password>
+		</connection>
+
+		<connection id="ESS04.KASP06">
+			<type>essbase</type>
+			<connectstring>http://n701ess04.fm.kroger.com:11080/eds/EssbaseEnterprise</connectstring>
+			<analyticserver>n701ess05.fm.kroger.com</analyticserver>
+			<essbaseapp>KASP06</essbaseapp>
+			<essbasedb>KASP06</essbasedb>
+			<user>batchid</user>
+			<password>bengals1</password>		
+		</connection>
+		
+	</connections>
+
+
+	<!-- all of the different sets of variables that can be used in a given test -->
+
+
+	<variables>
+	
+		<varset id="0901">
+			<variable name="PD" value="01"/>
+			<variable name="YR" value="09"/>
+		</varset>
+		
+		<varset id="0902">
+			<variable name="PD" value="02"/>
+			<variable name="YR" value="09"/>
+		</varset>
+	
+		<varset id="0903">
+			<variable name="PD" value="03"/>
+			<variable name="YR" value="09"/>
+		</varset>
+	
+		<varset id="0904">
+			<variable name="PD" value="04"/>
+			<variable name="YR" value="09"/>
+		</varset>
+	
+		<varset id="0905">
+			<variable name="PD" value="05"/>
+			<variable name="YR" value="09"/>
+		</varset>
+	
+	</variables>
+
+
+	<!--  all of the different tests that use different combinations of connections and variable sets -->
+
+	<tests>
+
+		<test id="TTL KASP06">	
+			<varsets>0905</varsets>
+			<query connection="DB20TCP">
+				SELECT
+					YEAR,PD,DIV,PAGE,LINE,PAMT FROM FNP_VPLP 		
+				WHERE
+				    DIV = '999'
+				    AND PAGE = '630' AND LINE=99
+				    AND PD='%PD%' AND YEAR='%YR%'
+		    </query>
+		    
+			<query connection="ESS04.KASP06">
+				SELECT ({[06-99]}) ON COLUMNS FROM
+					KASP06.KASP06 
+				WHERE 
+					([T.Year].[P%PD%], [T.Location].[T.Location], [Scenario].[Act20%YR%])			
+			</query>
+		</test>
+
+	</tests>
+	
+</MdxSqlTieout>
