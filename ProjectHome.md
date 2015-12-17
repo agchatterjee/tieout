@@ -1,0 +1,1 @@
+Tieout is a simple method for performing SQL and MDX queries on multiple databases or OLAP cubes using a simple variable substitution mechanism, to ensure that data is the same in both systems.
